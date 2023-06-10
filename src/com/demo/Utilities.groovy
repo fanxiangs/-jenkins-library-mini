@@ -5,6 +5,7 @@ class Utilities {
         script.timestamps {
             script.sh "ls  -al"
             script.echo "${script.env.HOME}  ${args}"
+            script.help
         }
     }
 }
