@@ -1,5 +1,5 @@
 package com.demo
 
 class TimestampedCommand {
-   static String foo = "bar"
+    static String foo = "bar"
 }
