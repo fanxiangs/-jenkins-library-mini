@@ -1,1 +1,1 @@
-# -jenkins-library-mini
+# jenkins-library-mini

@@ -1,0 +1,34 @@
+@Library('mini')_
+import com.demo.TimestampedCommand
+import com.demo.Utilities
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                script {
+                    Utilities.exec(this, 'clean package')
+                    
+                }
+                timestamps {
+                    echo 'Hello World with time'
+                    echo TimestampedCommand.foo
+                }
+                echo 'Hello World'
+                script {
+                    timedCommand.timedCommand14 {
+                        logFilePath = 'log.out'
+                        cmd = 'pwd'
+                    }
+                    timedCommand {
+                        sh 'ls -la'
+                    }
+                    
+                }
+            }
+        }
+    }
+}
