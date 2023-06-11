@@ -1,7 +1,7 @@
 @Library('mini')_
 import com.demo.TimestampedCommand
 import com.demo.Utilities
-
+import com.demo.CT
 
 pipeline {
     agent any
@@ -11,7 +11,6 @@ pipeline {
             steps {
                 script {
                     Utilities.exec(this, 'clean package')
-                    
                 }
                 timestamps {
                     echo 'Hello World with time'
@@ -26,9 +25,16 @@ pipeline {
                     timedCommand {
                         sh 'ls -la'
                     }
-                    
+                    def result = common.CT(this) {
+                        echo "Running test..."
+                        sh 'ls -la'
+                        echo "test success..."
+                    }
                 }
             }
         }
     }
 }
+
+
+

@@ -8,5 +8,6 @@ def CT(pipelineContext, Closure setup) {
     setup.delegate = test
     setup.resolveStrategy = Closure.DELEGATE_ONLY
     setup()
-    return test.generate()
+    // echo(test.generate().toString().toString())
+    return test.generate().call()
 }
