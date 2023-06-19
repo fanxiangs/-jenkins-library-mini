@@ -1,20 +1,14 @@
+import groovy.yaml.YamlSlurper
 
-def getVersion(versionFilePath="VERSION") {
-    def versionFile = readFile file: versionFilePath
-    def versionLines = versionFile.split('\n')
-
-    // 解析版本信息
-    def versionMap = [:]
-    versionLines.each { line ->
-        if (line =~ /^(\w+)\s*=\s*(.+)$/) {
-            versionMap[it[1]] = it[2]
-        }
-    }
-    return versionMap
-
-def updateVersion() {
-    def file = new File(filePath)
-    file.write(content)
+def call(String versionYamlFilePath = 'VERSION') {
+    def versionYamlContent = readFile(versionYamlFilePath)
+    def versionMap = new YamlSlurper().parseText(versionYamlContent)
+    
+    def major = versionMap.VERSION_MAJOR ?: 0
+    def minor = versionMap.VERSION_MINOR ?: 0
+    def release = versionMap.VERSION_RELEASE ?: 0
+    def preRelease = versionMap.VERSION_PRERELEASE ?: 0
+    
+    def version = "${major}.${minor}.${release}-${preRelease}"
+    return version
 }
-
-
