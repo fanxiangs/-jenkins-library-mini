@@ -31,3 +31,5 @@ class VersionUtils {
         return preRelease
     }
 }
+
+return new VersionUtils()
