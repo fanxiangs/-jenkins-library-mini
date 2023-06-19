@@ -10,6 +10,8 @@ pipeline {
         stage('Hello') {
             steps {
                 script {
+                    def currentVersion = versionUtils.getVersion()
+                    echo "Current Version: ${currentVersion}"
                     Utilities.exec(this, 'clean package')
                 }
                 timestamps {
@@ -33,8 +35,13 @@ pipeline {
                 }
             }
         }
+        stage('Update PreRelease') {
+            steps {
+                script {
+                    def newPreRelease = versionUtils.updatePreRelease()
+                    echo "New PreRelease: ${newPreRelease}"
+                }
+            }
+        }
     }
 }
-
-
-

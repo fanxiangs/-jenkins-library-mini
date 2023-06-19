@@ -1,35 +1,33 @@
-import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 
-class VersionUtils {
-    String versionYamlFilePath = 'VERSION'
-    
-    def readVersionYaml() {
-        def versionYamlContent = readFile(versionYamlFilePath)
-        def versionMap = new Yaml().load(versionYamlContent)
-        return versionMap
-    }
-    
-    def updatePreRelease() {
-        def versionMap = readVersionYaml()
-        
-        def preRelease = versionMap.VERSION_PRERELEASE ?: 0
-        
-        // Increment the preRelease value by 1
-        preRelease++
-        
-        // Update the preRelease value in the versionMap
-        versionMap.VERSION_PRERELEASE = preRelease
-        
-        // Write the updated versionMap back to the VERSION file
-        def dumperOptions = new DumperOptions()
-        dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
-        def yaml = new Yaml(dumperOptions)
-        def updatedVersionYamlContent = yaml.dump(versionMap)
-        writeFile file: versionYamlFilePath, text: updatedVersionYamlContent
-        
-        return preRelease
-    }
+def readVersionYaml(versionYamlFilePath = 'VERSION') {
+    def versionYamlContent = readFile(versionYamlFilePath)
+    def versionMap = new Yaml().load(versionYamlContent)
+    return versionMap
 }
 
-return new VersionUtils()
+def updatePreRelease(versionYamlFilePath = 'VERSION') {
+    def versionMap = readVersionYaml(versionYamlFilePath)
+    
+    def preRelease = versionMap.VERSION_PRERELEASE ?: 0
+    
+    // Increment the preRelease value by 1
+    preRelease++
+    
+    // Update the preRelease value in the versionMap
+    versionMap.VERSION_PRERELEASE = preRelease
+    
+    // Write the updated versionMap back to the VERSION file
+    def yaml = new Yaml()
+    def updatedVersionYamlContent = yaml.dump(versionMap)
+    writeFile file: versionYamlFilePath, text: updatedVersionYamlContent
+    
+    return preRelease
+}
+
+def getVersion(versionYamlFilePath = 'VERSION') {
+    def versionMap = readVersionYaml(versionYamlFilePath)
+    return "${versionMap.VERSION_MAJOR}.${versionMap.VERSION_MINOR}.${versionMap.VERSION_RELEASE}.${versionMap.VERSION_PRERELEASE}"
+}
+
+return [readVersionYaml: readVersionYaml, updatePreRelease: updatePreRelease, getVersion: getVersion]
