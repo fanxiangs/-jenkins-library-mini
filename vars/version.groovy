@@ -1,8 +1,8 @@
-import groovy.yaml.YamlSlurper
+import org.yaml.snakeyaml.Yaml
 
 def call(String versionYamlFilePath = 'VERSION') {
     def versionYamlContent = readFile(versionYamlFilePath)
-    def versionMap = new YamlSlurper().parseText(versionYamlContent)
+    def versionMap = new Yaml().load(versionYamlContent)
     
     def major = versionMap.VERSION_MAJOR ?: 0
     def minor = versionMap.VERSION_MINOR ?: 0
