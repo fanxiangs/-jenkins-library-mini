@@ -1,0 +1,44 @@
+---
+**Jenkins Shared Library - versionUtils.groovy**
+
+This Jenkins Shared Library script provides utility functions for handling version YAML files.
+
+**Functions:**
+
+1. `readVersionYaml(versionYamlFilePath = 'VERSION')`:
+
+   - Reads the version YAML file and returns the version map.
+   - Parameters:
+     - `versionYamlFilePath` (Optional) - The path to the version YAML file. Default is `'VERSION'`.
+   - Returns: The version map loaded from the YAML file.
+
+2. `updatePreRelease(versionYamlFilePath = 'VERSION')`:
+
+   - Updates the pre-release version in the version YAML file and returns the updated value.
+   - Parameters:
+     - `versionYamlFilePath` (Optional) - The path to the version YAML file. Default is `'VERSION'`.
+   - Returns: The updated pre-release version value.
+
+3. `getVersion(versionYamlFilePath = 'VERSION')`:
+
+   - Retrieves the version string from the version YAML file.
+   - Parameters:
+     - `versionYamlFilePath` (Optional) - The path to the version YAML file. Default is `'VERSION'`.
+   - Returns: The formatted version string.
+
+
+**Dependencies:**
+
+- The script requires the following dependencies:
+  - `org.yaml.snakeyaml.Yaml`: The YAML library for reading and writing YAML files.
+  - `org.yaml.snakeyaml.DumperOptions`: Options for configuring the YAML dumper.
+
+**Usage:**
+
+To use this function, supply a command to run.
+   ```groovy
+   def currentVersion = versionUtils.getVersion()
+   def versionMap = versionUtils.readVersionYaml()
+   def preRelease = versionUtils.updatePreRelease()
+   ```
+---
