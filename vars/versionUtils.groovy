@@ -39,8 +39,12 @@ def writeVersionMapToYaml(versionMap, versionYamlFilePath) {
     def dumperOptions = new DumperOptions()
     dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
     def yaml = new Yaml(dumperOptions)
-    def updatedVersionYamlContent = yaml.dump(versionMap)
-    writeFile file: versionYamlFilePath, text: updatedVersionYamlContent
+    
+    def workspace = pwd()
+    def versionYamlFile = new File(workspace, versionYamlFilePath)
+    versionYamlFile.withWriter { writer ->
+        yaml.dump(versionMap, writer)
+    }
 }
 
 return [
